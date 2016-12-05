@@ -43,17 +43,21 @@ public class SelenuimDemo {
         //Получаем заголовок страницы результатов
         System.out.println("Page title is: " + driver.getTitle());
 
-        List<WebElement> b_algo = driver.findElements(By.className("b_algo"));
-
-        System.out.println("List with title of all results of search:");
-        Iterator<WebElement> itr = b_algo.iterator();
+        //Получаем заголовки на странице поиска запроса
+        /*System.out.println("List with title of all results of search:");
+        List<WebElement> b_title = driver.findElements(By.className("b_title"));
+        Iterator<WebElement> itr = b_title.iterator();
         while(itr.hasNext()) {
             //System.out.println(itr.next().getText());
-
-            driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
             String text = itr.next().getText();
             String lines[] = text.split("\\n");
             System.out.println(lines[0]);
+        }*/
+
+        List<WebElement> b_title = driver.findElements(By.className("b_title"));
+        for(WebElement element:b_title)
+        {
+            System.out.println(element.findElement(By.tagName("h2")).getText());
         }
 
         //Закрываем страницу
