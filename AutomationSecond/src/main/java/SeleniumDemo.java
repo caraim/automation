@@ -12,8 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 public class SeleniumDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //Step 1. Создаем драйвер Chrome. Открываем страницу
         String property = System.getProperty("user.dir") + "/driver/chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", property);
@@ -39,25 +40,26 @@ public class SeleniumDemo {
         // Step 3. Scroll page
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         jse.executeScript("window.scrollBy(0, 250)", ""); // скролл на 250 px
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.presenceOfElementLocated(By.className("mimg"))); // ожидание картинок class "ming"
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("mimg"))); // ожидание картинок class "ming"
         jse.executeScript("window.scrollTo(0, document.body.scrollHeight)"); // скролл до конца страницы
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.presenceOfElementLocated(By.className("mimg")));  // ожидание картинок class "ming"
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("mimg")));  // ожидание картинок class "ming"
 
         // Step 4. В поисковую строку ввести слово без последней буквы
         WebElement search = driver.findElement(By.className("b_searchbox"));
         search.sendKeys("automatio");
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.className("sa_tm"), "automation")); // ожидание совпадение результата
 
-        WebElement automation = driver.findElement(By.cssSelector("#sa_ul > li:nth-child(5)")); // выбор пункта "automation"
+        //WebElement automation = driver.findElement(By.xpath("//*[@id='sa_ul']/li/div[contains(text(), 'automation')]"));
+        WebElement automation = driver.findElement(By.cssSelector("#sa_ul > li:nth-child(3)")); // выбор пункта "automation"
         automation.click();
 
-        (new WebDriverWait(driver, 20)).until(ExpectedConditions.presenceOfElementLocated(By.className("dg_u"))); // ожидание результатов поиска
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("dg_u"))); // ожидание результатов поиска
 
         // Step 5. Установить фильтр Даты "Прошлый месяц"
         WebElement dataTime = driver.findElement(By.cssSelector("#ftrB > ul > li:nth-child(6)"));
         dataTime.click();
 
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ftrB > ul > li:nth-child(6) > div > div > a:nth-child(4)"))); // ожидание открытия выпадающего списка
+        (new WebDriverWait(driver,10)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("#ftrB > ul > li:nth-child(6) > div > div > a:nth-child(4)"))); // ожидание открытия выпадающего списка
 
         WebElement lastMonth = driver.findElement(By.cssSelector("#ftrB > ul > li:nth-child(6) > div > div > a:nth-child(4)"));
         lastMonth.click();
@@ -68,15 +70,15 @@ public class SeleniumDemo {
         WebElement firstImg = driver.findElement(By.cssSelector("#dg_c > div > div > div:nth-child(1) > div > a > img"));
         firstImg.click();
 
-        (new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(By.className("dismissible"))); // ожидание режима слайд-шоу
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(By.className("dismissible"))); // ожидание режима слайд-шоу
 
         //Step 7
         String title = driver.getTitle();
-        WebElement next = driver.findElement(By.cssSelector("#iol_fsc > div:nth-child(1) > a:nth-child(2)"));
+        WebElement next = driver.findElement(By.cssSelector("#iol_navr"));
         next.click();
         (new WebDriverWait(driver, 20)).until(ExpectedConditions.presenceOfElementLocated(By.className("iol_fsc"))); // ожидание очереди картинок
 
-        WebElement prev = driver.findElement(By.cssSelector("#iol_fsc > div:nth-child(1) > a:nth-child(1)"));
+        WebElement prev = driver.findElement(By.cssSelector("#iol_navl"));
         prev.click();
         (new WebDriverWait(driver, 20)).until(ExpectedConditions.presenceOfElementLocated(By.className("iol_fsc"))); // ожидание очереди картинок
 
